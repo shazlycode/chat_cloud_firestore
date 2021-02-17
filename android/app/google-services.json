@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "873225212988",
+    "project_id": "healthy-reason-298523",
+    "storage_bucket": "healthy-reason-298523.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873225212988:android:2bd3d94fdf7e3744ac5f39",
+        "android_client_info": {
+          "package_name": "com.shazlycode.chat_cloud_firestore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "873225212988-keuqqi867ckqpmpr82gcjcgmqgcasam1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdDGgioHn_qc8voKhJQM1qMOaxbdruHZ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "873225212988-keuqqi867ckqpmpr82gcjcgmqgcasam1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
