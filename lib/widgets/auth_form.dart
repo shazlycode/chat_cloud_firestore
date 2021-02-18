@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
+  final Function(String email, String password, String userName, bool isLogin,
+      BuildContext ctx) authFn;
+  AuthForm(this.authFn);
   @override
   _AuthFormState createState() => _AuthFormState();
 }
 
 class _AuthFormState extends State<AuthForm> {
   final _form = GlobalKey<FormState>();
-  String _userName = '';
-  String _password = '';
-  String _email = '';
+  var _userEmail = '';
+  var _userName = '';
+  var _userPassword = '';
   bool isSigned = true;
+
   void auth() {
     final validated = _form.currentState.validate();
     FocusScope.of(context).unfocus();
     if (validated) {
       _form.currentState.save();
+
+      widget.authFn(_userEmail.trim(), _userPassword.trim(), _userName.trim(),
+          isSigned, context);
     } else {
       return;
     }
-    print(_userName);
-    print(_email);
-    print(_password);
   }
 
   @override
@@ -40,7 +44,9 @@ class _AuthFormState extends State<AuthForm> {
                   TextFormField(
                     key: ValueKey('email'),
                     onSaved: (value) {
-                      _email = value;
+                      setState(() {
+                        _userEmail = value;
+                      });
                     },
                     validator: (value) {
                       if (!value.contains('@') || value.isEmpty) {
@@ -62,7 +68,9 @@ class _AuthFormState extends State<AuthForm> {
                     TextFormField(
                       key: ValueKey('username'),
                       onSaved: (value) {
-                        _userName = value;
+                        setState(() {
+                          _userName = value;
+                        });
                       },
                       validator: (value) {
                         if (value.isEmpty) {
@@ -83,7 +91,9 @@ class _AuthFormState extends State<AuthForm> {
                   TextFormField(
                     key: ValueKey('password'),
                     onSaved: (value) {
-                      _password = value;
+                      setState(() {
+                        _userPassword = value;
+                      });
                     },
                     validator: (value) {
                       if (value.isEmpty || value.length < 6) {
