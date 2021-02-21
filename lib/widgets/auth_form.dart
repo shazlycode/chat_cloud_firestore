@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class AuthForm extends StatefulWidget {
   final Function(String email, String password, String userName, bool isLogin,
       BuildContext ctx) authFn;
-  AuthForm(this.authFn);
+  bool isLoading;
+  AuthForm(this.authFn, this.isLoading);
   @override
   _AuthFormState createState() => _AuthFormState();
 }
@@ -114,12 +115,14 @@ class _AuthFormState extends State<AuthForm> {
                   SizedBox(
                     height: 10,
                   ),
-                  RaisedButton(
-                    onPressed: () {
-                      auth();
-                    },
-                    child: !isSigned ? Text('SignUp') : Text('Login'),
-                  ),
+                  widget.isLoading
+                      ? CircularProgressIndicator()
+                      : RaisedButton(
+                          onPressed: () {
+                            auth();
+                          },
+                          child: !isSigned ? Text('SignUp') : Text('Login'),
+                        ),
                   FlatButton(
                     onPressed: () {
                       setState(() {
