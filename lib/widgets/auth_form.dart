@@ -1,8 +1,11 @@
+import 'dart:io';
+
+import 'package:chat_cloud_firestore/widgets/user_image_picker.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
-  final Function(String email, String password, String userName, bool isLogin,
-      BuildContext ctx) authFn;
+  final Function(String email, String password, String userName, File image,
+      bool isLogin, BuildContext ctx) authFn;
   bool isLoading;
   AuthForm(this.authFn, this.isLoading);
   @override
@@ -15,15 +18,25 @@ class _AuthFormState extends State<AuthForm> {
   var _userName = '';
   var _userPassword = '';
   bool isSigned = true;
+  File image;
+
+  void pickImage(File img) {
+    image = img;
+  }
 
   void auth() {
     final validated = _form.currentState.validate();
     FocusScope.of(context).unfocus();
+    if (!isSigned && image == null) {
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text('Take your profile picture first')));
+      return;
+    }
     if (validated) {
       _form.currentState.save();
 
       widget.authFn(_userEmail.trim(), _userPassword.trim(), _userName.trim(),
-          isSigned, context);
+          image, isSigned, context);
     } else {
       return;
     }
@@ -42,6 +55,7 @@ class _AuthFormState extends State<AuthForm> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  if (!isSigned) UserImagePicker(pickImage),
                   TextFormField(
                     key: ValueKey('email'),
                     onSaved: (value) {
